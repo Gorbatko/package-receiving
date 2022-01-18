@@ -39,6 +39,7 @@ const Area = () => {
         <Grid item xs={12} md={10}>
           <Paper className={classes.paper}>
             <Typography variant="subtitle1">Packages in this area</Typography>
+            {area.packages?.length === 0 && <Typography variant="caption">There is no packages in this area yet</Typography>}
             {loading ? <CircularProgress className={classes.loader} /> : (
               <>
                 <List>

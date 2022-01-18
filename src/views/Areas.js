@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { CircularProgress, Collapse, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Collapse, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import fakeApi from '../fake-api';
 import useAreas from '../hooks/useAreas';
@@ -70,6 +70,7 @@ const Areas = () => {
     <div>
       <Grid container spacing={3} justifyContent="center">
         <Grid item xs={12} md={10}>
+          <Button onClick={() => history.goBack()}>Back</Button>
           <Paper className={classes.paper}>
             <Typography variant="subtitle1">Create New Receiving Area</Typography>
             <AreaForm
