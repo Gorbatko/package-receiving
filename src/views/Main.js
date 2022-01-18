@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { Button, Card, CircularProgress, Collapse, Grid, makeStyles, MenuItem, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Collapse, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import fakeApi from '../fake-api';
 import useAreas from '../hooks/useAreas';
-import { sizes, weights } from '../static/enums';
 import { packageModel } from '../static/models';
 import AreaCard from '../components/AreaCard';
 import PackageForm from '../components/PackageForm';

@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import { Button, Card, CircularProgress, Collapse, FormControl, Grid, Input, InputLabel, makeStyles, MenuItem, Paper, Select, TextField, Typography } from '@material-ui/core';
+import { CircularProgress, Collapse, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import fakeApi from '../fake-api';
 import useAreas from '../hooks/useAreas';
-import { sizes, weights } from '../static/enums';
 import { areaModel } from '../static/models';
 import AreaCard from '../components/AreaCard';
 import AreaForm from '../components/AreaForm';
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const Areas = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [areas, areasLoading] = useAreas();
+  const [areas, areasLoading, refetchAreas] = useAreas();
   const [areaInfo, setAreaInfo] = useState(areaModel);
   const [areaLoading, setAreaLoading] = useState(false);
 
@@ -54,9 +53,12 @@ const Areas = () => {
     try {
       setAreaLoading(true);
       const data = await fakeApi.post('/areas', areaInfo);
-      setAlert({ severity: 'success', body: "Area successfuly created" })
+      if (data) {
+        setAlert({ severity: 'success', body: "Area successfuly created" })
+        setAreaInfo(areaModel);
+        refetchAreas();
+      }
       setAreaLoading(false);
-      setAreaInfo(areaModel);
     } catch (error) {
       console.error(error);
       setAlert({ severity: 'error', body: error })

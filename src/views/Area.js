@@ -21,7 +21,6 @@ const Area = () => {
   const [area, loading] = useArea(id);
   const classes = useStyles();
   const history = useHistory();
-  console.log(area)
   return (
     <div>
       <Grid container spacing={3} justifyContent="center">

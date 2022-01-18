@@ -55,7 +55,7 @@ const get = async (path) => {
     switch (path) {
         case '/areas':
             await wait();
-            return Promise.resolve(areas);
+            return Promise.resolve([...areas]);
         case /\/areas\/(\d+)/.test(path) ? path : null:
             await wait();
             const id = +path.match(/\/areas\/(\d+)/)[1];

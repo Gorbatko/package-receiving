@@ -6,6 +6,7 @@ export const packageModel = {
 
 export const areaModel = {
     name: '',
+    priority: '',
     weightRange: [],
     sizeRange: [],
 };
