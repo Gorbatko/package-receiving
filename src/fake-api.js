@@ -25,7 +25,7 @@ const packages = [
 
 window.onload = () => {
     const loadedAreas = JSON.parse(localStorage.getItem('areas'));
-    if (loadedAreas.length > 0) {
+    if (loadedAreas?.length > 0) {
         areas.push(...loadedAreas);
     } else {
         areas.push(...defaultAreas)
