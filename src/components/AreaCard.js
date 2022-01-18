@@ -11,7 +11,7 @@ const AreaCard = ({ area, cardClassName, history }) => {
         elevation={2}
         onClick={() => history.push(`/areas/${area.id}`)}
       >
-        <Typography variant="subtitle2">{area.name}</Typography>
+        <Typography variant="subtitle2">{area.name} Priority: <strong>{area.priority}</strong></Typography>
         <Typography display="block" variant="body2"><FitnessCenterIcon />{area.weightRange.join(', ')}</Typography>
         <Typography display="block" variant="body2"><StraightenIcon />{area.sizeRange.join(', ')}</Typography>
       </Card>

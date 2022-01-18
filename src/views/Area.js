@@ -29,7 +29,7 @@ const Area = () => {
           <Paper className={classes.paper}>
             {loading ? <CircularProgress className={classes.loader} /> : (
               <>
-                <Typography variant="subtitle1">{area.name}</Typography>
+                <Typography variant="subtitle1">{area.name} Priority: <strong>{area.priority}</strong></Typography>
                 <Typography display="block" variant="body"><FitnessCenterIcon />{area.weightRange?.join(', ')}</Typography>
                 <Typography display="block" variant="body"><StraightenIcon />{area.sizeRange?.join(', ')}</Typography>
               </>
