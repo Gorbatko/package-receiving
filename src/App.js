@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { AppBar, Container, makeStyles, Menu, Toolbar, Typography } from '@material-ui/core';
+import { Route, Switch } from 'react-router-dom';
+
+import Main from './views/Main';
+import Areas from './views/Areas';
+import { useHistory } from 'react-router-dom';
+import Area from './views/Area';
+
+const useStyles = makeStyles((theme) => ({
+  header: {
+    cursor: 'pointer',
+  },
+}));
 
 function App() {
+  const history = useHistory();
+  const classes = useStyles();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography className={classes.header} variant="h6" noWrap onClick={() => { history.push('/') }}>
+            Package Receiving
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Container>
+        <Switch>
+          <Route path="/" exact component={Main}/>
+          <Route path="/areas/:id" component={Area}/>
+          <Route path="/areas" component={Areas}/>
+        </Switch>
+      </Container>
     </div>
   );
 }
