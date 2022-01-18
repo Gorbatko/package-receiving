@@ -1,5 +1,7 @@
-import { Button, CircularProgress, Grid, List, ListItem, ListItemText, makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react'
+import { Button, CircularProgress, Grid, List, ListItem, ListItemText, makeStyles, Paper, Typography } from '@material-ui/core';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import StraightenIcon from '@material-ui/icons/Straighten';
 import { useHistory, useParams } from 'react-router-dom'
 import useArea from '../hooks/useArea';
 
@@ -29,8 +31,8 @@ const Area = () => {
             {loading ? <CircularProgress className={classes.loader} /> : (
               <>
                 <Typography variant="subtitle1">{area.name}</Typography>
-                <Typography display="block" variant="body">{area.weightRange?.join(', ')}</Typography>
-                <Typography display="block" variant="body">{area.sizeRange?.join(', ')}</Typography>
+                <Typography display="block" variant="body"><FitnessCenterIcon />{area.weightRange?.join(', ')}</Typography>
+                <Typography display="block" variant="body"><StraightenIcon />{area.sizeRange?.join(', ')}</Typography>
               </>
             )}
           </Paper>
@@ -45,7 +47,7 @@ const Area = () => {
                     <ListItem>
                       <ListItemText
                         primary={pack.name}
-                        secondary={`${pack.weight} ${pack.size}`}
+                        secondary={<><FitnessCenterIcon />{pack.weight} <StraightenIcon />{pack.size}</>}
                       />
                     </ListItem>
                   ))}

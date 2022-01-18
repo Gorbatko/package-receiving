@@ -6,6 +6,8 @@ import fakeApi from '../fake-api';
 import useAreas from '../hooks/useAreas';
 import { sizes, weights } from '../static/enums';
 import { packageModel } from '../static/models';
+import AreaCard from '../components/AreaCard';
+import PackageForm from '../components/PackageForm';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,7 +49,7 @@ const Main = () => {
     setPackageInfo({ ...packageInfo, [event.target.name]: event.target.value });
   }
 
-  const handleSubmitPackage = async (event) => {
+  const handleSubmitForm = async (event) => {
     event.preventDefault();
     try {
       setPackageLoading(true);
@@ -68,55 +70,13 @@ const Main = () => {
         <Grid item xs={12} md={10}>
           <Paper className={classes.paper}>
             <Typography variant="subtitle1">Create New Package</Typography>
-            <form onSubmit={handleSubmitPackage} className={classes.form} autoComplete="off" >
-                <TextField
-                  fullWidth
-                  margin="normal"
-                  name="name"
-                  label="Name"
-                  className={classes.textField}
-                  value={packageInfo.name}
-                  onChange={handlePackageChange}
-                  required
-                />
-                <TextField
-                  select
-                  margin="normal"
-                  name="weight"
-                  label="Weight"
-                  className={`${classes.textField} ${classes.textFieldSmall}`}
-                  value={packageInfo.weight}
-                  onChange={handlePackageChange}
-                  required
-                >
-                  {weights.map((item, index) => (
-                    <MenuItem key={index} value={item}>{item}</MenuItem>
-                  ))}
-                </TextField>
-                <TextField
-                  select
-                  margin="normal"
-                  name="size"
-                  label="Size"
-                  className={`${classes.textField} ${classes.textFieldSmall}`}
-                  value={packageInfo.size}
-                  onChange={handlePackageChange}
-                  required
-                >
-                  {sizes.map((item, index) => (
-                    <MenuItem key={index} value={item}>{item}</MenuItem>
-                  ))}
-                </TextField>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  disabled={packageLoading}
-                  color="primary"
-                >
-                  {packageLoading ? <CircularProgress size={24} /> : 'Create'}
-                </Button>
-            </form>
+            <PackageForm
+              packageInfo={packageInfo}
+              classes={classes}
+              loading={packageLoading}
+              onSubmit={handleSubmitForm}
+              onChange={handlePackageChange}
+            />
           </Paper>
         </Grid>
         <Grid item xs={12} md={10}>
@@ -133,18 +93,11 @@ const Main = () => {
               <Grid item><Button variant="text" onClick={() => history.push('/areas')}>More</Button></Grid>
             </Grid>
             <Grid container spacing={3}>
+              {!areasLoading && areas.length === 0 && (
+                <Typography variant="body1">No areas found</Typography>
+              )}
               {areas.map((area) => (
-                <Grid key={area.id} item xs={12} sm={6} md={3}>
-                  <Card
-                    className={classes.card}
-                    elevation={2}
-                  >
-                    <Typography variant="subtitle2">{area.name}</Typography>
-                    <Typography variant="caption">{area.weightRange.join(', ')}</Typography>
-                    <div></div>
-                    <Typography variant="caption">{area.sizeRange.join(', ')}</Typography>
-                  </Card>
-                </Grid>
+                <AreaCard key={area.id} area={area} cardClassName={classes.card} history={history} />
               ))}
               {areasLoading && <CircularProgress className={classes.loader} />}
             </Grid>

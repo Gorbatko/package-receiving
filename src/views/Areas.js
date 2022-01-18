@@ -6,6 +6,8 @@ import fakeApi from '../fake-api';
 import useAreas from '../hooks/useAreas';
 import { sizes, weights } from '../static/enums';
 import { areaModel } from '../static/models';
+import AreaCard from '../components/AreaCard';
+import AreaForm from '../components/AreaForm';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,7 +49,7 @@ const Areas = () => {
     setAreaInfo({ ...areaInfo, [event.target.name]: event.target.value });
   }
 
-  const handleSubmitPackage = async (event) => {
+  const handleSubmitForm = async (event) => {
     event.preventDefault();
     try {
       setAreaLoading(true);
@@ -68,70 +70,13 @@ const Areas = () => {
         <Grid item xs={12} md={10}>
           <Paper className={classes.paper}>
             <Typography variant="subtitle1">Create New Receiving Area</Typography>
-            <form onSubmit={handleSubmitPackage} className={classes.form} autoComplete="off" >
-              <TextField
-                fullWidth
-                margin="normal"
-                name="name"
-                label="Name"
-                className={classes.textField}
-                value={areaInfo.name}
-                onChange={handleAreaChange}
-                required
-              />
-              <TextField
-                fullWidth
-                type="number"
-                margin="normal"
-                name="priority"
-                label="Priority"
-                className={classes.textField}
-                value={areaInfo.priority}
-                onChange={handleAreaChange}
-                required
-              />
-              <FormControl margin="normal" required className={`${classes.textField} ${classes.textFieldSmall}`}
-                  >
-                <InputLabel id="weight-label">Weight</InputLabel>
-                <Select
-                  labelId="weight-label"
-                  multiple
-                  name="weightRange"
-                  value={areaInfo.weightRange}
-                  onChange={handleAreaChange}
-                  input={<Input />}
-                >
-                  {weights.map((item, index) => (
-                    <MenuItem key={index} value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl margin="normal" required className={`${classes.textField} ${classes.textFieldSmall}`}
-                  >
-                <InputLabel id="size-label">Size</InputLabel>
-                <Select
-                  labelId="size-label"
-                  multiple
-                  name="sizeRange"
-                  value={areaInfo.sizeRange}
-                  onChange={handleAreaChange}
-                  input={<Input />}
-                >
-                  {sizes.map((item, index) => (
-                    <MenuItem key={index} value={item}>{item}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                disabled={areaLoading}
-                color="primary"
-              >
-                {areaLoading ? <CircularProgress size={24} /> : 'Create'}
-              </Button>
-            </form>
+            <AreaForm
+              areaInfo={areaInfo}
+              classes={classes}
+              loading={areaLoading}
+              onSubmit={handleSubmitForm}
+              onChange={handleAreaChange}
+            />
           </Paper>
         </Grid>
         <Grid item xs={12} md={10}>
@@ -148,18 +93,7 @@ const Areas = () => {
             </Grid>
             <Grid container spacing={3}>
               {areas.map((area) => (
-                <Grid key={area.id} item xs={12} sm={6} md={3}>
-                  <Card
-                    className={classes.card}
-                    elevation={2}
-                    onClick={() => history.push(`/areas/${area.id}`)}
-                  >
-                    <Typography variant="subtitle2">{area.name}</Typography>
-                    <Typography variant="caption">{area.weightRange.join(', ')}</Typography>
-                    <div></div>
-                    <Typography variant="caption">{area.sizeRange.join(', ')}</Typography>
-                  </Card>
-                </Grid>
+                <AreaCard key={area.id} area={area} cardClassName={classes.card} history={history} />
               ))}
               {areasLoading && <CircularProgress className={classes.loader} />}
             </Grid>
